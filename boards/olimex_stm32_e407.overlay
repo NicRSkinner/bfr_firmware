@@ -1,0 +1,61 @@
+/{
+	aliases {
+		tim1 = &timers2;
+		pwm1 = &pwm2_pins_a;
+		tim2 = &timers3;
+		pwm2 = &pwm3_pins_a;
+	};
+
+	timerdevs {
+		timer_dev1: timer_dev_1 {
+			timer = &timers2;
+		};
+
+		timer_dev2: timer_dev_2 {
+			timer = &timers3;
+		};
+	};
+};
+
+&pinctrl {
+	pwm2_pins_a: pwm2-0 {
+		pinmux = <STM32_PINMUX('A', 3, AF1)>; /* TIM2_CH4 */
+		bias-pull-down;
+		drive-push-pull;
+		slew-rate = "medium-speed";
+	};
+
+	pwm2_sleep_pins_a: pwm2-sleep-0 {
+		pinmux = <STM32_PINMUX('A', 3, ANALOG)>; /* TIM2_CH4 */
+	};
+
+	pwm3_pins_a: pwm3-0 {
+		pinmux = <STM32_PINMUX('C', 7, AF2)>; /* TIM3_CH2 */
+		bias-pull-down;
+		drive-push-pull;
+		slew-rate = "medium-speed";
+	};
+
+	pwm3_sleep_pins_a: pwm3-sleep-0 {
+		pinmux = <STM32_PINMUX('C', 7, ANALOG)>; /* TIM3_CH2 */
+	};
+};
+
+&timers2 {
+	status = "okay";
+
+	pwm {
+		status = "okay";
+		pinctrl-0 = <&pwm2_pins_a>;
+	};
+};
+
+&timers3 {
+	status = "okay";
+
+	pwm {
+		status = "okay";
+		pinctrl-0 = <&pwm3_pins_a>;
+	};
+};
+
